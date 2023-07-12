@@ -1,14 +1,13 @@
-import * as Joi from '@hapi/joi';
-import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { DatabaseModule } from './database/database.module';
-import { AuthenticationModule } from './modules/authentication/authentication.module';
-import { CloudinaryModule } from './modules/cloudinary/cloudinary.module';
-import { ImageModule } from './modules/image/image.module';
-import { PostModule } from './modules/post/post.module';
-import { ProductModule } from './modules/product/product.module';
-import { SearchModule } from './modules/search/search.module';
-import { UserModule } from './modules/user/user.module';
+import * as Joi from "joi";
+import { Module } from "@nestjs/common";
+import { ConfigModule } from "@nestjs/config";
+import { DatabaseModule } from "./database/database.module";
+import { AuthenticationModule } from "./modules/authentication/authentication.module";
+import { CloudinaryModule } from "./modules/cloudinary/cloudinary.module";
+import { ImageModule } from "./modules/image/image.module";
+import { PostModule } from "./modules/post/post.module";
+import { ProductModule } from "./modules/product/product.module";
+import { UserModule } from "./modules/user/user.module";
 
 @Module({
   imports: [
@@ -29,7 +28,6 @@ import { UserModule } from './modules/user/user.module';
         JWT_REFRESH_TOKEN_EXPIRATION_TIME: Joi.string().required(),
       }),
     }),
-    SearchModule,
     DatabaseModule,
     UserModule,
     AuthenticationModule,
