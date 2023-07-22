@@ -11,6 +11,7 @@ import {
 import { User } from "../../user/user.entity";
 import { PaymentStatus } from "src/common/enums/payment-status.enum";
 import OrderItem from "./order-item.entity";
+import { ApiHideProperty } from "@nestjs/swagger";
 
 @Entity()
 class Order {
@@ -19,6 +20,9 @@ class Order {
 
   @Column()
   customerId: number;
+
+  @Column({ type: "numeric" })
+  totalAmount: number;
 
   @Column({
     name: "payment_status",
