@@ -5,7 +5,6 @@ import { DatabaseModule } from "./database/database.module";
 import { AuthenticationModule } from "./modules/authentication/authentication.module";
 import { CloudinaryModule } from "./modules/cloudinary/cloudinary.module";
 import { ImageModule } from "./modules/image/image.module";
-import { PostModule } from "./modules/post/post.module";
 import { ProductModule } from "./modules/product/product.module";
 import { UserModule } from "./modules/user/user.module";
 
@@ -19,9 +18,6 @@ import { UserModule } from "./modules/user/user.module";
         POSTGRES_PASSWORD: Joi.string().required(),
         POSTGRES_DB: Joi.string().required(),
         PORT: Joi.number(),
-        ELASTICSEARCH_NODE: Joi.string(),
-        ELASTICSEARCH_USERNAME: Joi.string(),
-        ELASTICSEARCH_PASSWORD: Joi.string(),
         JWT_ACCESS_TOKEN_SECRET: Joi.string().required(),
         JWT_ACCESS_TOKEN_EXPIRATION_TIME: Joi.string().required(),
         JWT_REFRESH_TOKEN_SECRET: Joi.string().required(),
@@ -31,7 +27,6 @@ import { UserModule } from "./modules/user/user.module";
     DatabaseModule,
     UserModule,
     AuthenticationModule,
-    PostModule,
     ProductModule,
     ImageModule,
     CloudinaryModule,

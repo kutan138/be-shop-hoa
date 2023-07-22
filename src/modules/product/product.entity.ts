@@ -1,5 +1,6 @@
-import { Image } from 'src/modules/image/image.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Image } from "src/modules/image/image.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import OrderItem from "../order/entities/order-item.entity";
 
 @Entity()
 export class Product {
@@ -20,4 +21,7 @@ export class Product {
 
   @OneToMany(() => Image, (image) => image.product)
   images: Image[];
+
+  @OneToMany(() => OrderItem, (orderItem) => orderItem.product)
+  orderItems: OrderItem[];
 }
