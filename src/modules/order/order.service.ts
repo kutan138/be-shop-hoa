@@ -57,9 +57,19 @@ export class OrderService {
       );
     }
 
+    let totalAmount = 0;
+    const newOrderItems = createOrderDto.orderItems.map((item) => {
+      const product = products.find((p) => p.id === item.productId);
+      const subtotal = product.price * item.quantity;
+      totalAmount += subtotal;
+
+      return item;
+    });
+
     const newOrder = new Order();
-    newOrder.orderItems = createOrderDto.orderItems;
+    newOrder.orderItems = newOrderItems;
     newOrder.customerId = customerId;
+    newOrder.totalAmount = totalAmount;
 
     return this.orderRepository.save(newOrder);
   }

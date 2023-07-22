@@ -9,14 +9,20 @@ import {
   UseGuards,
   UseInterceptors,
 } from "@nestjs/common";
-import { ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from "@nestjs/swagger";
 import FindOneParams from "src/common/utilities/findOneParams";
 import JwtAuthenticationGuard from "src/modules/authentication/jwt-authentication.guard";
 import RequestWithUser from "src/modules/authentication/requestWithUser.interface";
-import CreateOrderDto from "./dto/createOrder.dto";
+import OrderItem from "./entities/order-item.entity";
 import PostEntity from "./entities/order.entity";
 import { OrderService } from "./order.service";
-import OrderItem from "./entities/order-item.entity";
+import createOrderDto from "./dto/createOrder.dto";
 
 @Controller("order")
 @ApiTags("order")
@@ -25,11 +31,15 @@ export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
   @Get()
+  @UseGuards(JwtAuthenticationGuard)
+  @ApiBearerAuth("access-token")
   async getAllOrderByUser(@Req() req: RequestWithUser) {
     return this.orderService.getAllOrdersByUser(req.user.id);
   }
 
   @Get(":id")
+  @UseGuards(JwtAuthenticationGuard)
+  @ApiBearerAuth("access-token")
   @ApiParam({
     name: "id",
     required: true,
@@ -57,10 +67,12 @@ export class OrderController {
 
   @Post()
   @UseGuards(JwtAuthenticationGuard)
-  async createPost(
-    @Body() orderItems: OrderItem[],
+  @ApiBearerAuth("access-token")
+  @ApiBody({ type: createOrderDto })
+  async createOrder(
+    @Body() createOrderDto: createOrderDto,
     @Req() req: RequestWithUser
   ) {
-    return this.orderService.createOrderByUser({ orderItems }, req.user.id);
+    return this.orderService.createOrderByUser(createOrderDto, req.user.id);
   }
 }

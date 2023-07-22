@@ -7,6 +7,7 @@ import { CloudinaryModule } from "./modules/cloudinary/cloudinary.module";
 import { ImageModule } from "./modules/image/image.module";
 import { ProductModule } from "./modules/product/product.module";
 import { UserModule } from "./modules/user/user.module";
+import { OrderModule } from "./modules/order/order.module";
 
 @Module({
   imports: [
@@ -26,10 +27,11 @@ import { UserModule } from "./modules/user/user.module";
     }),
     DatabaseModule,
     UserModule,
+    CloudinaryModule,
     AuthenticationModule,
     ProductModule,
+    OrderModule,
     ImageModule,
-    CloudinaryModule,
   ],
 })
 export class AppModule {}
