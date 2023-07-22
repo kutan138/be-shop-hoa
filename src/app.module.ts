@@ -5,7 +5,6 @@ import { DatabaseModule } from "./database/database.module";
 import { AuthenticationModule } from "./modules/authentication/authentication.module";
 import { CloudinaryModule } from "./modules/cloudinary/cloudinary.module";
 import { ImageModule } from "./modules/image/image.module";
-import { PostModule } from "./modules/post/post.module";
 import { ProductModule } from "./modules/product/product.module";
 import { UserModule } from "./modules/user/user.module";
 
@@ -28,7 +27,6 @@ import { UserModule } from "./modules/user/user.module";
     DatabaseModule,
     UserModule,
     AuthenticationModule,
-    PostModule,
     ProductModule,
     ImageModule,
     CloudinaryModule,

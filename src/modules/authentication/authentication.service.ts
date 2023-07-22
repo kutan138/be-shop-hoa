@@ -1,17 +1,16 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { JwtService } from '@nestjs/jwt';
-import PostgresErrorCode from 'src/database/postgresErrorCode.enum';
-import { UserService } from 'src/modules/user/user.service';
-import RegisterDto from './dto/register.dto';
-import { comparePasswords, hashPassword } from './password.utils';
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { JwtService } from "@nestjs/jwt";
+import { UserService } from "src/modules/user/user.service";
+import RegisterDto from "./dto/register.dto";
+import { comparePasswords, hashPassword } from "./password.utils";
 
 @Injectable()
 export class AuthenticationService {
   constructor(
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
-    private readonly configService: ConfigService,
+    private readonly configService: ConfigService
   ) {}
 
   public async getAuthenticatedUser(email: string, password: string) {
@@ -19,20 +18,20 @@ export class AuthenticationService {
       const user = await this.userService.getByEmail(email);
       const isPasswordMatching = await comparePasswords(
         user.password,
-        password,
+        password
       );
       if (!isPasswordMatching) {
         throw new HttpException(
-          'Wrong credentials provided',
-          HttpStatus.BAD_REQUEST,
+          "Wrong credentials provided",
+          HttpStatus.BAD_REQUEST
         );
       }
       user.password = undefined;
       return user;
     } catch (error) {
       throw new HttpException(
-        'Wrong credentials provided',
-        HttpStatus.BAD_REQUEST,
+        "Wrong credentials provided",
+        HttpStatus.BAD_REQUEST
       );
     }
   }
@@ -48,15 +47,9 @@ export class AuthenticationService {
       return createdUser;
     } catch (error) {
       console.error(error);
-      if (error?.code === PostgresErrorCode.UniqueViolation) {
-        throw new HttpException(
-          'User with that email already exists',
-          HttpStatus.BAD_REQUEST,
-        );
-      }
       throw new HttpException(
-        'Something went wrong',
-        HttpStatus.INTERNAL_SERVER_ERROR,
+        "Something went wrong",
+        HttpStatus.INTERNAL_SERVER_ERROR
       );
     }
   }
@@ -68,13 +61,13 @@ export class AuthenticationService {
   public getCookieWithJwtRefreshToken(userId: number) {
     const payload: TokenPayload = { userId };
     const token = this.jwtService.sign(payload, {
-      secret: this.configService.get('JWT_REFRESH_TOKEN_SECRET'),
+      secret: this.configService.get("JWT_REFRESH_TOKEN_SECRET"),
       expiresIn: `${this.configService.get(
-        'JWT_REFRESH_TOKEN_EXPIRATION_TIME',
+        "JWT_REFRESH_TOKEN_EXPIRATION_TIME"
       )}s`,
     });
     const cookie = `Refresh=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get(
-      'JWT_REFRESH_TOKEN_EXPIRATION_TIME',
+      "JWT_REFRESH_TOKEN_EXPIRATION_TIME"
     )}`;
     return {
       cookie,
@@ -84,18 +77,18 @@ export class AuthenticationService {
 
   public getCookieWithJwtAccessToken(
     userId: number,
-    isSecondFactorAuthenticated = false,
+    isSecondFactorAuthenticated = false
   ) {
     const payload: TokenPayload = { userId, isSecondFactorAuthenticated };
     const token = this.jwtService.sign(payload, {
-      secret: this.configService.get('JWT_ACCESS_TOKEN_SECRET'),
+      secret: this.configService.get("JWT_ACCESS_TOKEN_SECRET"),
       expiresIn: `${this.configService.get(
-        'JWT_ACCESS_TOKEN_EXPIRATION_TIME',
+        "JWT_ACCESS_TOKEN_EXPIRATION_TIME"
       )}s`,
     });
 
     const cookie = `Authentication=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get(
-      'JWT_ACCESS_TOKEN_EXPIRATION_TIME',
+      "JWT_ACCESS_TOKEN_EXPIRATION_TIME"
     )}`;
 
     return { cookie, token };

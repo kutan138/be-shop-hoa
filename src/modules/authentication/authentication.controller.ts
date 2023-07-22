@@ -9,34 +9,34 @@ import {
   Get,
   Headers,
   ValidationPipe,
-} from '@nestjs/common';
-import { AuthenticationService } from './authentication.service';
-import RegisterDto from './dto/register.dto';
-import RequestWithUser from './requestWithUser.interface';
-import { LocalAuthenticationGuard } from './localAuthentication.guard';
-import JwtAuthenticationGuard from './jwt-authentication.guard';
-import { Response } from 'express';
-import { ApiBody, ApiTags } from '@nestjs/swagger';
-import LogInDto from './dto/logIn.dto';
-import { UserService } from 'src/modules/user/user.service';
-import JwtRefreshGuard from './jwt-refresh.guard';
+} from "@nestjs/common";
+import { AuthenticationService } from "./authentication.service";
+import RegisterDto from "./dto/register.dto";
+import RequestWithUser from "./requestWithUser.interface";
+import { LocalAuthenticationGuard } from "./localAuthentication.guard";
+import JwtAuthenticationGuard from "./jwt-authentication.guard";
+import { Response } from "express";
+import { ApiBody, ApiTags } from "@nestjs/swagger";
+import LogInDto from "./dto/logIn.dto";
+import { UserService } from "src/modules/user/user.service";
+import JwtRefreshGuard from "./jwt-refresh.guard";
 
-@Controller('authentication')
-@ApiTags('authentication')
+@Controller("authentication")
+@ApiTags("authentication")
 export class AuthenticationController {
   constructor(
     private readonly authenticationService: AuthenticationService,
-    private readonly usersService: UserService,
+    private readonly usersService: UserService
   ) {}
 
-  @Post('register')
+  @Post("register")
   async register(@Body(new ValidationPipe()) registrationData: RegisterDto) {
     return this.authenticationService.register(registrationData);
   }
 
   @HttpCode(200)
   @UseGuards(LocalAuthenticationGuard)
-  @Post('log-in')
+  @Post("log-in")
   @ApiBody({ type: LogInDto })
   async logIn(@Req() request: RequestWithUser) {
     const { user } = request;
@@ -47,22 +47,18 @@ export class AuthenticationController {
 
     await this.usersService.setCurrentRefreshToken(refreshToken, user.id);
 
-    if (user.isTwoFactorAuthenticationEnabled) {
-      return;
-    }
-
     return { ...user, accessToken, refreshToken };
   }
 
   @UseGuards(JwtAuthenticationGuard)
-  @Post('log-out')
+  @Post("log-out")
   async logOut(
     @Req() request: RequestWithUser,
     @Res() response: Response,
-    @Headers() headers: Record<string, string>,
+    @Headers() headers: Record<string, string>
   ) {
     await this.usersService.removeRefreshToken(request.user.id);
-    headers['Set-Cookie'] = this.authenticationService.getCookieForLogOut();
+    headers["Set-Cookie"] = this.authenticationService.getCookieForLogOut();
   }
 
   @UseGuards(JwtAuthenticationGuard)
@@ -74,10 +70,10 @@ export class AuthenticationController {
   }
 
   @UseGuards(JwtRefreshGuard)
-  @Get('refresh')
+  @Get("refresh")
   refresh(@Req() request: RequestWithUser) {
     const accessToken = this.authenticationService.getCookieWithJwtAccessToken(
-      request.user.id,
+      request.user.id
     );
 
     return { accessToken };
