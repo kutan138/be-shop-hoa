@@ -1,6 +1,6 @@
-import { Exclude } from 'class-transformer';
-import Post from 'src/modules/post/post.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Exclude } from "class-transformer";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import Order from "../order/entities/order.entity";
 
 @Entity()
 export class User {
@@ -22,15 +22,12 @@ export class User {
   @Column({ nullable: true })
   phoneNumber: string;
 
-  @OneToMany(() => Post, (post: Post) => post.author)
-  public posts?: Post[];
-
-  @Column({ default: false })
-  public isTwoFactorAuthenticationEnabled: boolean;
-
   @Column({
     nullable: true,
   })
   @Exclude()
   public currentHashedRefreshToken?: string;
+
+  @OneToMany(() => Order, (order: Order) => order.customer)
+  orders: Order[];
 }

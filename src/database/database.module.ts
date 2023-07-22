@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule, ConfigService } from "@nestjs/config";
-import DatabaseLogger from "./databaseLogger";
+import DatabaseLogger from "./logs/databaseLogger";
 
 @Module({
   imports: [
@@ -17,6 +17,13 @@ import DatabaseLogger from "./databaseLogger";
         password: configService.get("POSTGRES_PASSWORD"),
         database: configService.get("POSTGRES_DB"),
         entities: [__dirname + "/../**/*.entity.js"],
+        migrations: [__dirname + "/../migrations/*{.js,.ts}"],
+        cli: {
+          migrationsDirs: __dirname + "/../migrations",
+        },
+        extra: {
+          charset: "utf8mb4_unicode_ci",
+        },
         synchronize: true,
         autoLoadEntities: true,
       }),

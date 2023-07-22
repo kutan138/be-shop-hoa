@@ -1,27 +1,27 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import createProductDto from './dto/createProductDto';
-import updateProductDto from './dto/updateProductDto';
-import PostNotFoundException from './exceptions/NotFound.exception';
-import { Product } from './product.entity';
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { In, Repository } from "typeorm";
+import createProductDto from "./dto/createProductDto";
+import updateProductDto from "./dto/updateProductDto";
+import PostNotFoundException from "./exceptions/NotFound.exception";
+import { Product } from "./product.entity";
 
 @Injectable()
 export class ProductService {
   constructor(
     @InjectRepository(Product)
-    private productRepository: Repository<Product>,
+    private productRepository: Repository<Product>
   ) {}
 
   async getProducts(offset?: number, limit?: number, startId?: number) {
-    const queryBuilder = this.productRepository.createQueryBuilder('product');
+    const queryBuilder = this.productRepository.createQueryBuilder("product");
 
     if (startId) {
-      queryBuilder.where('product.id > :startId', { startId });
+      queryBuilder.where("product.id > :startId", { startId });
     }
 
     const [items, count] = await queryBuilder
-      .orderBy('product.id', 'ASC')
+      .orderBy("product.id", "ASC")
       .skip(offset)
       .take(limit)
       .getManyAndCount();
@@ -31,8 +31,8 @@ export class ProductService {
 
   async getProductById(id: number) {
     const product = await this.productRepository
-      .createQueryBuilder('product')
-      .where('product.id = :id', { id })
+      .createQueryBuilder("product")
+      .where("product.id = :id", { id })
       .getOne();
 
     if (product) {
@@ -59,5 +59,9 @@ export class ProductService {
     if (!deleteResponse.affected) {
       throw new PostNotFoundException(id);
     }
+  }
+
+  async checkIfProductsExist(productIds: Product["id"][]): Promise<Product[]> {
+    return await this.productRepository.findBy({ id: In(productIds) });
   }
 }
