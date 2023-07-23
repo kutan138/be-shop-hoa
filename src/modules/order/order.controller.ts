@@ -19,8 +19,7 @@ import {
 import FindOneParams from "src/common/utilities/findOneParams";
 import JwtAuthenticationGuard from "src/modules/authentication/jwt-authentication.guard";
 import RequestWithUser from "src/modules/authentication/requestWithUser.interface";
-import OrderItem from "./entities/order-item.entity";
-import PostEntity from "./entities/order.entity";
+import OrderEntity from "./entities/order.entity";
 import { OrderService } from "./order.service";
 import createOrderDto from "./dto/createOrder.dto";
 
@@ -49,7 +48,7 @@ export class OrderController {
   @ApiResponse({
     status: 200,
     description: "A order has been successfully fetched",
-    type: PostEntity,
+    type: OrderEntity,
   })
   @ApiResponse({
     status: 404,

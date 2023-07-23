@@ -20,7 +20,7 @@ export class Product {
   price: number;
 
   @OneToMany(() => Image, (image) => image.product)
-  images: Image[];
+  images: string[];
 
   @OneToMany(() => OrderItem, (orderItem) => orderItem.product)
   orderItems: OrderItem[];
