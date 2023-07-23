@@ -1,5 +1,5 @@
 import * as Joi from "joi";
-import { Module } from "@nestjs/common";
+import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { DatabaseModule } from "./database/database.module";
 import { AuthenticationModule } from "./modules/authentication/authentication.module";
@@ -8,6 +8,8 @@ import { ImageModule } from "./modules/image/image.module";
 import { ProductModule } from "./modules/product/product.module";
 import { UserModule } from "./modules/user/user.module";
 import { OrderModule } from "./modules/order/order.module";
+import { AdminMiddleware } from "src/common/middleware/admin.middleware";
+import { CategoryController } from "./modules/category/category.controller";
 
 @Module({
   imports: [
@@ -34,4 +36,8 @@ import { OrderModule } from "./modules/order/order.module";
     ImageModule,
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AdminMiddleware).forRoutes(CategoryController);
+  }
+}

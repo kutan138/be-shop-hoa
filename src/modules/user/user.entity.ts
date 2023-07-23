@@ -15,6 +15,9 @@ export class User {
   @Column({ unique: true })
   email: string;
 
+  @Column()
+  roles: string[];
+
   @Column({ nullable: true })
   @Exclude()
   public password?: string;

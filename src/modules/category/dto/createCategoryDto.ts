@@ -3,18 +3,16 @@ import {
   ArrayNotEmpty,
   IsArray,
   IsNotEmpty,
+  IsNumber,
   IsOptional,
   IsString,
 } from "class-validator";
+import { Image } from "src/modules/image/image.entity";
 
-export default class createProductDto {
+export default class createCategoryDto {
   @IsNotEmpty()
   @IsString()
   name: string;
-
-  @IsNotEmpty()
-  @IsString()
-  productCode: string;
 
   @IsOptional()
   @IsString()
@@ -25,4 +23,8 @@ export default class createProductDto {
   @ArrayNotEmpty()
   @ArrayMaxSize(5) // Set the maximum number of images allowed (you can adjust this number)
   images: string[]; // An array to hold the image file paths or URLs
+
+  @IsOptional()
+  @IsNumber()
+  parentCategoryId: number;
 }
