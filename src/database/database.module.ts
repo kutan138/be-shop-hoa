@@ -11,11 +11,11 @@ import DatabaseLogger from "./logs/databaseLogger";
       useFactory: (configService: ConfigService) => ({
         type: "postgres",
         logger: new DatabaseLogger(),
-        host: configService.get("POSTGRES_HOST"),
+        host: configService.get("POSTGRES_ELEPHANT_HOST"),
         port: configService.get("POSTGRES_PORT"),
-        username: configService.get("POSTGRES_USER"),
-        password: configService.get("POSTGRES_PASSWORD"),
-        database: configService.get("POSTGRES_DB"),
+        username: configService.get("POSTGRES_ELEPHANT_DB"),
+        password: configService.get("POSTGRES_ELEPHANT_PASSWORD"),
+        database: configService.get("POSTGRES_ELEPHANT_DB"),
         entities: [__dirname + "/../**/*.entity.js"],
         migrations: [__dirname + "/../migrations/*{.js,.ts}"],
         cli: {
