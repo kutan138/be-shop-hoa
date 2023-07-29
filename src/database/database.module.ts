@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule, ConfigService } from "@nestjs/config";
-import DatabaseLogger from "src/database/logs/databaseLogger";
+// import DatabaseLogger from "./logs/databaseLogger";
 
 @Module({
   imports: [
@@ -10,7 +10,7 @@ import DatabaseLogger from "src/database/logs/databaseLogger";
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: "postgres",
-        logger: new DatabaseLogger(),
+        // logger: new DatabaseLogger(),
         host: configService.get("POSTGRES_ELEPHANT_HOST"),
         port: configService.get("POSTGRES_PORT"),
         username: configService.get("POSTGRES_ELEPHANT_DB"),
