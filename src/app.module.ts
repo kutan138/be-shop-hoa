@@ -9,7 +9,6 @@ import { ProductModule } from "./modules/product/product.module";
 import { UserModule } from "./modules/user/user.module";
 import { OrderModule } from "./modules/order/order.module";
 import { AdminMiddleware } from "src/common/middleware/admin.middleware";
-import { CategoryController } from "./modules/category/category.controller";
 
 @Module({
   imports: [
@@ -36,8 +35,4 @@ import { CategoryController } from "./modules/category/category.controller";
     ImageModule,
   ],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AdminMiddleware).forRoutes(CategoryController);
-  }
-}
+export class AppModule {}
