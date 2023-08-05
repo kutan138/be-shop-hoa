@@ -1,14 +1,14 @@
-import * as Joi from "joi";
-import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
+import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
+import * as Joi from "joi";
 import { DatabaseModule } from "./database/database.module";
 import { AuthenticationModule } from "./modules/authentication/authentication.module";
 import { CloudinaryModule } from "./modules/cloudinary/cloudinary.module";
 import { ImageModule } from "./modules/image/image.module";
+import { OrderModule } from "./modules/order/order.module";
 import { ProductModule } from "./modules/product/product.module";
 import { UserModule } from "./modules/user/user.module";
-import { OrderModule } from "./modules/order/order.module";
-import { AdminMiddleware } from "src/common/middleware/admin.middleware";
+import { CategoryModule } from "./modules/category/category.module";
 
 @Module({
   imports: [
@@ -33,6 +33,7 @@ import { AdminMiddleware } from "src/common/middleware/admin.middleware";
     ProductModule,
     OrderModule,
     ImageModule,
+    CategoryModule,
   ],
 })
 export class AppModule {}

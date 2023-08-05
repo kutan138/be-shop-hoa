@@ -10,4 +10,4 @@ import { AdminCategoryController } from "./admin/category.controller";
   controllers: [CategoryController, AdminCategoryController],
   providers: [CategoryService],
 })
-export class OrderModule {}
+export class CategoryModule {}
