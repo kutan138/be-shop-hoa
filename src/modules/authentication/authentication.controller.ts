@@ -72,10 +72,10 @@ export class AuthenticationController {
   @UseGuards(JwtRefreshGuard)
   @Post("refresh")
   refresh(@Req() request: RequestWithUser) {
-    const accessToken = this.authenticationService.getCookieWithJwtAccessToken(
+    const { token } = this.authenticationService.getCookieWithJwtAccessToken(
       request.user.id
     );
 
-    return { accessToken };
+    return { accessToken: token };
   }
 }
