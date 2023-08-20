@@ -36,7 +36,7 @@ export class AdminCategoryController {
   @UseGuards(JwtAuthenticationGuard)
   @ApiBearerAuth("access-token")
   @ApiBody({ type: createCategoryDto })
-  async createOrder(@Body() createCategoryDto: createCategoryDto) {
+  async createCategory(@Body() createCategoryDto: createCategoryDto) {
     return this.categoryService.createCategory(createCategoryDto);
   }
 

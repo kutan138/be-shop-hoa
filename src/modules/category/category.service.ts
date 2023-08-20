@@ -23,10 +23,11 @@ export class CategoryService {
     if (startId) {
       queryBuilder.where("category.id > :startId", { startId });
     }
+    const skip = (offset - 1) * limit;
 
     const [items, count] = await queryBuilder
       .orderBy("category.id", "ASC")
-      .skip(offset)
+      .skip(skip)
       .take(limit)
       .getManyAndCount();
 
