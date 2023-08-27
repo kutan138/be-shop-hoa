@@ -29,6 +29,7 @@ export class CategoryService {
       .orderBy("category.id", "ASC")
       .skip(skip)
       .take(limit)
+      .leftJoinAndSelect("category.parent", "parent")
       .getManyAndCount();
 
     return { items, count };
