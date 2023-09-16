@@ -16,7 +16,14 @@ export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
   @Get()
-  async getCategories(@Query() { offset, limit, startId }: PaginationParams) {
-    return this.categoryService.getCategories(offset, limit, startId);
+  async getCategories(
+    @Query() { offset, limit, startId, level }: PaginationParams
+  ) {
+    return this.categoryService.getCategories({
+      offset,
+      limit,
+      startId,
+      level,
+    });
   }
 }

@@ -1,5 +1,9 @@
-import { IsNumber, Min, IsOptional } from 'class-validator';
-import { Type } from 'class-transformer';
+import { IsNumber, Min, IsOptional } from "class-validator";
+import { Type } from "class-transformer";
+
+export enum Level {
+  GET_ALL = 0,
+}
 
 export class PaginationParams {
   @IsOptional()
@@ -19,4 +23,9 @@ export class PaginationParams {
   @IsNumber()
   @Min(1)
   limit?: number;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
+  level?: number;
 }

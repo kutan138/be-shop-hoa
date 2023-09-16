@@ -1,10 +1,12 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import CreateCategoryDto from "./dto/createCategoryDto";
 import Category from "./entities/category.entity";
 import updateCategoryDto from "./dto/updateCategoryDto";
 import CategoryNotFoundException from "./exceptions/NotFound.exception";
+import { Level } from "src/common/utilities/paginationParams";
+import { buildTree } from "src/common/utilities/buildTreeData";
 
 @Injectable()
 export class CategoryService {
@@ -17,9 +19,40 @@ export class CategoryService {
     return this.categoryRepository.find();
   }
 
-  async getCategories(offset?: number, limit?: number, startId?: number) {
-    const queryBuilder = this.categoryRepository.createQueryBuilder("category");
+  async getCategories({
+    offset,
+    limit,
+    startId,
+    level,
+  }: {
+    offset?: number;
+    limit?: number;
+    startId?: number;
+    level?: number;
+  }) {
+    // Get all categories tree
+    if (Number(level) === Level.GET_ALL) {
+      const categories = await this.categoryRepository
+        .createQueryBuilder("category")
+        .leftJoinAndSelect("category.parent", "parent")
+        .select(["category", "parent"])
+        .getMany();
+      const categoriesConverted = categories.map((category) => {
+        return { ...category, parent: category?.parent?.id ?? null };
+      });
 
+      return {
+        items: buildTree({
+          data: categoriesConverted,
+          idKey: "id",
+          parentKey: "parent",
+          parentValue: null,
+        }),
+      };
+    }
+
+    // Get paging category
+    const queryBuilder = this.categoryRepository.createQueryBuilder("category");
     if (startId) {
       queryBuilder.where("category.id > :startId", { startId });
     }
