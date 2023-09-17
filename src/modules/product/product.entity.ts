@@ -1,6 +1,13 @@
 import { Image } from "src/modules/image/image.entity";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import OrderItem from "../order/entities/order-item.entity";
+import { Occasion } from "../occasion/occasion.entity";
 
 @Entity()
 export class Product {
@@ -24,4 +31,7 @@ export class Product {
 
   @OneToMany(() => OrderItem, (orderItem) => orderItem.product)
   orderItems: OrderItem[];
+
+  @ManyToOne(() => Occasion, (occasion) => occasion.products)
+  occasion: Occasion;
 }
