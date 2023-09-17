@@ -19,6 +19,10 @@ export default class updateCategoryDto {
   description: string;
 
   @IsOptional()
+  @IsString()
+  slug: string;
+
+  @IsOptional()
   @IsArray()
   @ArrayNotEmpty()
   @ArrayMaxSize(5) // Set the maximum number of images allowed (you can adjust this number)
@@ -26,5 +30,5 @@ export default class updateCategoryDto {
 
   @IsOptional()
   @IsNumber()
-  parentCategoryId: number;
+  parent: number;
 }

@@ -71,16 +71,16 @@ export class CategoryService {
   async createCategory(
     createCategoryDto: CreateCategoryDto
   ): Promise<Category> {
-    const { name, images, description, parentCategoryId } = createCategoryDto;
+    const { name, images, description, parent } = createCategoryDto;
     const category = this.categoryRepository.create({
       name,
       images,
       description,
     });
 
-    if (parentCategoryId) {
+    if (parent) {
       const parentCategory = await this.categoryRepository.findOne({
-        where: { id: parentCategoryId },
+        where: { id: parent },
       });
 
       category.parent = parentCategory;
@@ -94,31 +94,19 @@ export class CategoryService {
     updateCategoryDto: updateCategoryDto
   ): Promise<Category> {
     const category = await this.categoryRepository.findOne({ where: { id } });
-    const { name, images, description, parentCategoryId } = updateCategoryDto;
 
     if (!category) {
       throw new CategoryNotFoundException(id);
     }
 
-    if (parentCategoryId) {
+    if (updateCategoryDto.parent) {
       const parentCategory = await this.categoryRepository.findOne({
-        where: { id: parentCategoryId },
+        where: { id: updateCategoryDto.parent },
       });
 
       category.parent = parentCategory;
     }
-
-    if (name) {
-      category.name = updateCategoryDto.name;
-    }
-
-    if (description) {
-      category.description = updateCategoryDto.description;
-    }
-
-    if (images) {
-      category.images = updateCategoryDto.images;
-    }
+    Object.assign(category, updateCategoryDto);
 
     return this.categoryRepository.save(category);
   }

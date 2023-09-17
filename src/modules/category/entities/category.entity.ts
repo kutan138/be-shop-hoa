@@ -16,8 +16,11 @@ class Category {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ nullable: true })
   description: string;
+
+  @Column({ nullable: true })
+  slug: string;
 
   @OneToMany(() => Image, (image) => image.category)
   images: string[];
