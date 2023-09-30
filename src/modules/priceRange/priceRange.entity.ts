@@ -4,7 +4,7 @@ import { Product } from "../product/product.entity";
 import { IsOptional } from "class-validator";
 
 @Entity()
-export class Occasion {
+export class PriceRangeEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -13,8 +13,9 @@ export class Occasion {
 
   @Column({ nullable: true })
   @IsOptional()
-  description: string;
+  minPrice: number;
 
-  @OneToMany(() => Product, (product) => product.occasion)
-  products: Product[];
+  @Column({ nullable: true })
+  @IsOptional()
+  maxPrice: number;
 }
