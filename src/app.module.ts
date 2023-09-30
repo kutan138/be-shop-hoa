@@ -10,6 +10,7 @@ import { ProductModule } from "./modules/product/product.module";
 import { UserModule } from "./modules/user/user.module";
 import { CategoryModule } from "./modules/category/category.module";
 import { OccasionModule } from "./modules/occasion/occasion.module";
+import { PriceRangeModule } from "./modules/priceRange/priceRange.module";
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { OccasionModule } from "./modules/occasion/occasion.module";
     ImageModule,
     CategoryModule,
     OccasionModule,
+    PriceRangeModule,
   ],
 })
 export class AppModule {}
