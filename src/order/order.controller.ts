@@ -17,8 +17,8 @@ import {
   ApiTags,
 } from "@nestjs/swagger";
 import FindOneParams from "src/common/utilities/findOneParams";
-import JwtAuthenticationGuard from "src/modules/authentication/jwt-authentication.guard";
-import RequestWithUser from "src/modules/authentication/requestWithUser.interface";
+import JwtAuthenticationGuard from "src/authentication/jwt-authentication.guard";
+import RequestWithUser from "src/authentication/requestWithUser.interface";
 import OrderEntity from "./entities/order.entity";
 import { OrderService } from "./order.service";
 import createOrderDto from "./dto/createOrder.dto";

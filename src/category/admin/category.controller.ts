@@ -14,7 +14,7 @@ import {
   ValidationPipe,
 } from "@nestjs/common";
 import { ApiBearerAuth, ApiBody, ApiTags } from "@nestjs/swagger";
-import JwtAuthenticationGuard from "src/modules/authentication/jwt-authentication.guard";
+import JwtAuthenticationGuard from "src/authentication/jwt-authentication.guard";
 import { CategoryService } from "../category.service";
 import createCategoryDto from "../dto/createCategoryDto";
 import updateCategoryDto from "../dto/updateCategoryDto";

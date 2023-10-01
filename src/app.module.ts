@@ -2,15 +2,16 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import * as Joi from "joi";
 import { DatabaseModule } from "./database/database.module";
-import { AuthenticationModule } from "./modules/authentication/authentication.module";
-import { CloudinaryModule } from "./modules/cloudinary/cloudinary.module";
-import { ImageModule } from "./modules/image/image.module";
-import { OrderModule } from "./modules/order/order.module";
-import { ProductModule } from "./modules/product/product.module";
-import { UserModule } from "./modules/user/user.module";
-import { CategoryModule } from "./modules/category/category.module";
-import { OccasionModule } from "./modules/occasion/occasion.module";
-import { PriceRangeModule } from "./modules/priceRange/priceRange.module";
+import { AuthenticationModule } from "./authentication/authentication.module";
+import { CloudinaryModule } from "./cloudinary/cloudinary.module";
+import { ImageModule } from "./image/image.module";
+import { OrderModule } from "./order/order.module";
+import { ProductModule } from "./product/product.module";
+import { UserModule } from "./user/user.module";
+import { CategoryModule } from "./category/category.module";
+import { OccasionModule } from "./occasion/occasion.module";
+import { PriceRangeModule } from "./priceRange/priceRange.module";
+import { DesignModule } from "./design/design.module";
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { PriceRangeModule } from "./modules/priceRange/priceRange.module";
     CategoryModule,
     OccasionModule,
     PriceRangeModule,
+    DesignModule,
   ],
 })
 export class AppModule {}

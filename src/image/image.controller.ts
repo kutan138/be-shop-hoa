@@ -5,34 +5,34 @@ import {
   UploadedFiles,
   UseGuards,
   UseInterceptors,
-} from '@nestjs/common';
-import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
-import { CloudinaryService } from 'src/modules/cloudinary/cloudinary.service';
-import JwtAuthenticationGuard from '../authentication/jwt-authentication.guard';
-import { ApiTags } from '@nestjs/swagger';
+} from "@nestjs/common";
+import { FileInterceptor, FilesInterceptor } from "@nestjs/platform-express";
+import { CloudinaryService } from "src/cloudinary/cloudinary.service";
+import JwtAuthenticationGuard from "../authentication/jwt-authentication.guard";
+import { ApiTags } from "@nestjs/swagger";
 
-@Controller('image')
-@ApiTags('image')
+@Controller("image")
+@ApiTags("image")
 export class ImageController {
   // ... Constructor
   constructor(private readonly cloudinaryService: CloudinaryService) {}
 
-  @Post('upload')
+  @Post("upload")
   @UseGuards(JwtAuthenticationGuard)
-  @UseInterceptors(FileInterceptor('file'))
+  @UseInterceptors(FileInterceptor("file"))
   uploadImage(@UploadedFile() file: Express.Multer.File) {
     return this.cloudinaryService.uploadFile(file);
   }
 
-  @Post('uploads')
+  @Post("uploads")
   @UseGuards(JwtAuthenticationGuard)
-  @UseInterceptors(FilesInterceptor('file[]', 5))
+  @UseInterceptors(FilesInterceptor("file[]", 5))
   async uploadImages(@UploadedFiles() files: Express.Multer.File[]) {
     const urls = await Promise.all(
       files.map(async (file): Promise<string> => {
         const { secure_url } = await this.cloudinaryService.uploadFile(file);
         return secure_url;
-      }),
+      })
     );
     return urls;
   }

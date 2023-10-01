@@ -7,9 +7,9 @@ import {
   IsOptional,
   IsString,
 } from "class-validator";
-import { Image } from "src/modules/image/image.entity";
+import { Image } from "src/image/image.entity";
 
-export default class createCategoryDto {
+export default class updateCategoryDto {
   @IsNotEmpty()
   @IsString()
   name: string;
