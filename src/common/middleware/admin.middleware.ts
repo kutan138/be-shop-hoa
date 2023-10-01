@@ -2,8 +2,8 @@
 
 import { Injectable, NestMiddleware } from "@nestjs/common";
 import { Response, NextFunction } from "express";
-import RequestWithUser from "src/modules/authentication/requestWithUser.interface";
-import { UserRole } from "src/modules/user/user.entity";
+import RequestWithUser from "src/authentication/requestWithUser.interface";
+import { UserRole } from "src/user/user.entity";
 
 @Injectable()
 export class AdminMiddleware implements NestMiddleware {

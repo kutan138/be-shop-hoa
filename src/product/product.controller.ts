@@ -13,7 +13,7 @@ import {
 } from "@nestjs/common";
 import { ProductService } from "./product.service";
 import CreateProductDto from "./dto/createProductDto";
-import JwtAuthenticationGuard from "src/modules/authentication/jwt-authentication.guard";
+import JwtAuthenticationGuard from "src/authentication/jwt-authentication.guard";
 import { PaginationParams } from "src/common/utilities/paginationParams";
 import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Product } from "./product.entity";

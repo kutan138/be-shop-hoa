@@ -1,6 +1,6 @@
 import { Injectable, UnprocessableEntityException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { User } from "src/modules/user/user.entity";
+import { User } from "src/user/user.entity";
 import { Repository } from "typeorm";
 import { ProductService } from "../product/product.service";
 import CreateOrderDto from "./dto/createOrder.dto";

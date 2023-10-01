@@ -18,7 +18,7 @@ import JwtAuthenticationGuard from "./jwt-authentication.guard";
 import { Response } from "express";
 import { ApiBody, ApiTags } from "@nestjs/swagger";
 import LogInDto from "./dto/logIn.dto";
-import { UserService } from "src/modules/user/user.service";
+import { UserService } from "src/user/user.service";
 import JwtRefreshGuard from "./jwt-refresh.guard";
 
 @Controller("authentication")
