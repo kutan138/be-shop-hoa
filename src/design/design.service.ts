@@ -13,11 +13,32 @@ export class DesignService {
   ) {}
 
   async create(createDesignDto: CreateDesignDto): Promise<Design> {
-    return this.designRepository.create(createDesignDto);
+    return this.designRepository.save(createDesignDto);
   }
 
-  async findAll(): Promise<Design[]> {
-    return this.designRepository.find();
+  async findWithPagination({
+    offset,
+    limit,
+    startId,
+  }: {
+    offset?: number;
+    limit?: number;
+    startId?: number;
+  }) {
+    // Get paging
+    const queryBuilder = this.designRepository.createQueryBuilder("design");
+    if (startId) {
+      queryBuilder.where("design.id > :startId", { startId });
+    }
+    const skip = (offset - 1) * limit;
+
+    const [items, count] = await queryBuilder
+      .orderBy("design.id", "ASC")
+      .skip(skip)
+      .take(limit)
+      .getManyAndCount();
+
+    return { items, count };
   }
 
   async findOne(id: number): Promise<Design> {
@@ -25,15 +46,15 @@ export class DesignService {
   }
 
   async update(id: number, updateDesignDto: UpdateDesignDto): Promise<Design> {
-    const priceRange = await this.findOne(id);
+    const design = await this.findOne(id);
 
-    if (!priceRange) {
-      throw new NotFoundException("Price range not found");
+    if (!design) {
+      throw new NotFoundException("Design not found");
     }
 
     return this.designRepository.save({
-      ...priceRange,
-      updateDesignDto,
+      ...design,
+      ...updateDesignDto,
     });
   }
 

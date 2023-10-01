@@ -7,10 +7,12 @@ import {
   Param,
   Delete,
   Put,
+  Query,
 } from "@nestjs/common";
 import { DesignService } from "./design.service";
 import { CreateDesignDto } from "./dto/create-design.dto";
 import { UpdateDesignDto } from "./dto/update-design.dto";
+import { PaginationParams } from "src/common/utilities/paginationParams";
 
 @Controller("design")
 export class DesignController {
@@ -22,8 +24,12 @@ export class DesignController {
   }
 
   @Get()
-  findAll() {
-    return this.designService.findAll();
+  async findAll(@Query() { offset, limit, startId }: PaginationParams) {
+    return this.designService.findWithPagination({
+      offset,
+      limit,
+      startId,
+    });
   }
 
   @Get(":id")
