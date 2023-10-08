@@ -12,6 +12,7 @@ import { CategoryModule } from "./category/category.module";
 import { OccasionModule } from "./occasion/occasion.module";
 import { PriceRangeModule } from "./priceRange/priceRange.module";
 import { DesignModule } from "./design/design.module";
+import { RelationshipModule } from "./relationship/relationship.module";
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { DesignModule } from "./design/design.module";
     OccasionModule,
     PriceRangeModule,
     DesignModule,
+    RelationshipModule,
   ],
 })
 export class AppModule {}
