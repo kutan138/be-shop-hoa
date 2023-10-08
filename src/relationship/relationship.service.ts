@@ -52,14 +52,14 @@ export class RelationshipService {
     id: number,
     updateRelationshipDto: UpdateRelationshipDto
   ): Promise<Relationship> {
-    const relactionship = await this.findOne(id);
+    const relationship = await this.findOne(id);
 
-    if (!relactionship) {
+    if (!relationship) {
       throw new NotFoundException("Relationship not found");
     }
 
     return this.relationshipRepository.save({
-      ...relactionship,
+      ...relationship,
       ...updateRelationshipDto,
     });
   }

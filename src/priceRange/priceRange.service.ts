@@ -60,7 +60,7 @@ export class PriceRangeService {
 
     return this.priceRangeRepository.save({
       ...priceRange,
-      updatePriceRangeDto,
+      ...updatePriceRangeDto,
     });
   }
 
