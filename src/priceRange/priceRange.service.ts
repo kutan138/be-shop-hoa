@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { PriceRangeEntity } from "./priceRange.entity";
-import CreatePriceRangeDto from "./dto/createpriceRangeDto";
+import CreatePriceRangeDto from "./dto/createPriceRangeDto";
 import UpdatePriceRangeDto from "./dto/updatePriceRangeDto";
 
 @Injectable()
